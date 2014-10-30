@@ -1,0 +1,40 @@
+<!doctype html>
+<html>
+<head>
+    <title>Main</title>
+    <script src="./bower_components/jQuery/dist/jquery.min.js"></script>
+    <script src="./bower_components/jqueryui/jquery-ui.min.js"></script>
+</head>
+<body>
+<div>
+    <button id="viz">Toggle Visibility</button>
+    <button id="att">Toggle Attachment</button>
+</div>
+<iframe src="frame.html"></iframe>
+
+<script>
+var visible = true,
+    attached = true,
+    $div = $('<div />'),
+    _iframe = $('iframe');
+
+$('#viz').on('click', toggleVisibility);
+$('#att').on('click', toggleAttachment);
+
+function toggleVisibility () {
+    _iframe.css('display', visible ? 'none' : 'block');
+    visible = !visible;
+}
+
+function toggleAttachment () {
+    if (attached) {
+        $div.append(_iframe);
+    } else {
+        $('body').append(_iframe);
+    }
+
+    attached = !attached;
+}
+</script>
+</body>
+</html>

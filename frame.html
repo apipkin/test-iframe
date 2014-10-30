@@ -1,0 +1,119 @@
+<!doctype html>
+<html>
+<head>
+    <title>Frame</title>
+    <script src="./bower_components/jQuery/dist/jquery.min.js"></script>
+    <script src="./bower_components/jqueryui/jquery-ui.min.js"></script>
+    <script src="./bower_components/d3/d3.min.js"></script>
+    <style>
+    /* SVG styling */
+svg {
+    width: 840px;
+    height: 600px;
+    font-family: helvetica, sans-serif;
+}
+
+path, line {
+    stroke: #777;
+}
+    .box {
+        position: absolute;
+        width: 20px;
+        height: 20px;
+        border: 1px solid #333;
+        box-shadow: 2px 2px 2px rgba(0,0,0,0.3);
+
+        -webkit-animation-name: spin;
+        -webkit-animation-duration: 1000ms;
+        -webkit-animation-iteration-count: infinite;
+        -webkit-animation-timing-function: linear;
+
+        animation-name: spin;
+        animation-duration: 1000ms;
+        animation-iteration-count: infinite;
+        animation-timing-function: linear;
+    }
+
+    @-webkit-keyframes spin {
+        from {
+            -webkit-transform: rotate(0deg);
+        } to {
+            -webkit-transform: rotate(360deg);
+        }
+    }
+    @keyframes spin {
+        from {
+            transform: rotate(0deg);
+        } to {
+            transform: rotate(360deg);
+        }
+    }
+    button { z-index: 4;}
+    </style>
+</head>
+<body>
+    <span id="count"></span>
+    <div id="boxes"></div>
+    <div id="chart">
+        <svg>
+        </svg>
+    </div>
+    <button class="regenerate">Regenerate</button>
+
+
+    <script>
+        (function () {
+            var i, count = 50,
+                colors = ['red', 'blue', 'green', 'orange', 'purple', 'yellow', 'black', 'white'];
+
+            for (i = 0; i < count; i++) {
+                (function (j) {
+                    setTimeout(function () {
+                        makeBox(j);
+                    }, 800 * j);
+                }(i));
+            }
+
+
+
+            function makeBox (i) {
+                var box = $('<div class="box"></div>');
+
+                box.offset({ top: Math.random() * i + 20 });
+
+                box.css('backgroundColor', colors[ i % colors.length ]);
+
+                animateBox(box, 300, i);
+
+                $('#boxes').append(box);
+            }
+
+            function animateBox(box, to, index) {
+                var nextTo = to !== 0 ? 0 : 400;
+
+                box.animate({
+                    left: Math.random() * to + 'px',
+                    width: Math.random() * to + 20 + 'px',
+                    height: Math.random() * to + 20 + 'px',
+                    easing: 'easeIn',
+                    opacity: Math.random()
+                }, function () {
+                    animateBox(box, nextTo, index);
+                    if (!index) { updateCount(); }
+                });
+            }
+
+            function updateCount () {
+                var node = $('#count'),
+                    _count = node.data('count') || 0;
+
+                _count = (_count + 1) % count;
+                node.text(_count);
+                node.data('count', _count);
+                regenerate();
+            }
+        }());
+    </script>
+    <script src="tree.js"></script>
+</body>
+</html>
