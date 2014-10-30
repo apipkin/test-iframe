@@ -6,7 +6,7 @@ test-iframe
  - `frame.html` simple and complex calculations on 100 seperate DOM nodes with JavaScript animation and CSS animation. Also includes a continuously changing fractal tree ([@prcweb](http://twitter.com/prcweb)) to introduce more complex calculations.
  
 ## NodeJS
-If you would like to serve this from node.js, have node installed ((http://nodejs.org/download/)) and run `node .`
+If you would like to serve this from node.js, have node installed (http://nodejs.org/download/) and run `node .`
 
 #### Uses
  - jQuery 2.1.1
